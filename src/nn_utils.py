@@ -1,7 +1,7 @@
 from IPython.display import display
-from PIL import Image as PImage
+from PIL import Image as PImage, ImageDraw as PImageDraw, ImageFont as PImageFont
 
-from torch import nn, no_grad, Tensor
+from torch import nn, no_grad
 from torch import cat, randn_like
 from torch import log as t_log, exp as t_exp
 
@@ -127,3 +127,19 @@ class CVAE(VAE):
     mu, sig = self.encode(x, cond)
     z = self.sample(mu, sig)
     return self.decode(z, cond), mu, sig
+
+def show_object_predictions(img, predictions):
+  font = PImageFont.load_default(12)
+  dimg = img.copy()
+  draw = PImageDraw.Draw(dimg)
+
+  for obj in predictions:
+    label = obj["label"]
+    (x0, y0, x1, y1) = tuple(obj["box"].values())
+    draw.rectangle((x0,y0,x1,y1),
+                   outline=(10, 220, 10),
+                   width=2)
+    draw.rectangle((x0,y0-6,x0+6*len(label),y0+6), fill=(0,0,0,160))
+    draw.text((x0,y0-6), label, font=font)
+
+  return dimg
