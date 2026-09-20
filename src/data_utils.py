@@ -3,11 +3,12 @@ import matplotlib.cm as cm
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import PIL.Image as PImage
 import string
-import urllib.request as request
+import urllib.request as urequest
 
+from io import BytesIO
 from os import listdir, path
+from PIL import Image as PImage
 from random import seed, shuffle
 
 from sklearn.metrics import ConfusionMatrixDisplay, accuracy_score, confusion_matrix, root_mean_squared_error
@@ -17,8 +18,14 @@ from warnings import simplefilter
 
 
 def object_from_json_url(url):
-  with request.urlopen(url) as in_file:
-    return json.load(in_file)
+  with urequest.urlopen(url) as response:
+    return json.load(response)
+
+
+def image_from_url(url):
+  with urequest.urlopen(url) as response:
+    image_data = BytesIO(response.read())
+    return PImage.open(image_data)
 
 
 def toDataFrame(X):

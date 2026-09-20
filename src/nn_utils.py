@@ -1,6 +1,3 @@
-import urllib.request as urequest
-
-from io import BytesIO
 from IPython.display import display
 from PIL import Image as PImage, ImageDraw as PImageDraw, ImageFont as PImageFont
 
@@ -146,8 +143,3 @@ def show_object_predictions(img, predictions):
     draw.text((x0,y0-6), label, font=font)
 
   return dimg
-
-def image_from_url(url):
-  with urequest.urlopen(url) as response:
-    image_data = BytesIO(response.read())
-    return PImage.open(image_data)
