@@ -1,1 +1,2 @@
 datasets/audio/hood-internet.tar.gz filter=lfs diff=lfs merge=lfs -text
+datasets/json/moma_art.json filter=lfs diff=lfs merge=lfs -text
