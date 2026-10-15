@@ -65,6 +65,7 @@ jobs:
           tar --exclude='data/image/imagenette/prep_imagenette.py' -czf imagenette.tar.gz data/image/imagenette
           tar --exclude='data/image/forest-tree/raw' -czf forest-tree.tar.gz data/image/forest-tree
           tar --exclude='data/image/lfw/raw' -czf lfw.tar.gz data/image/lfw
+          tar -czf mystery.tar.gz data/csv/mystery
 
       - name: Tag Release
         id: tag
